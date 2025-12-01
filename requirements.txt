@@ -1,0 +1,31 @@
+# 依赖文件
+# 安装命令: pip install -r requirements.txt
+
+# AI和机器学习
+openai>=1.0.0
+whisper-python>=1.0.0
+torch>=2.0.0
+transformers>=4.30.0
+
+# 数据处理
+numpy>=1.21.0
+pandas>=1.3.0
+
+# 音频处理
+ffmpeg-python>=0.2.0
+librosa>=0.9.0
+
+# 网络请求
+requests>=2.28.0
+
+# 配置管理
+pyyaml>=6.0
+python-dotenv>=1.0.0
+
+# 日志和监控
+loguru>=0.7.0
+
+# 开发工具
+pytest>=7.0.0
+black>=22.0.0
+flake8>=5.0.0

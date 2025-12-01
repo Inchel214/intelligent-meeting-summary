@@ -1,0 +1,131 @@
+# AI服务配置文件
+# 支持多种AI服务提供商的灵活切换
+
+# 服务配置
+ai_services:
+  # OpenAI配置（云服务）
+  openai:
+    enabled: true
+    api_key: "${OPENAI_API_KEY}"  # 从环境变量读取
+    model: "gpt-3.5-turbo"  # 可选: gpt-3.5-turbo, gpt-4, gpt-4-turbo
+    max_tokens: 2000
+    temperature: 0.3
+    timeout: 30
+    
+  # 本地大模型配置（GPU服务器）
+  local_model:
+    enabled: false  # 默认关闭，需要时开启
+    model_path: "/path/to/your/model"  # 模型路径
+    type: "chatglm3"  # 可选: chatglm3, baichuan2, qwen
+    device: "cuda"  # cuda, cpu
+    max_length: 2048
+    temperature: 0.3
+    
+  # 百度文心一言配置
+  baidu:
+    enabled: false
+    api_key: "${BAIDU_API_KEY}"
+    secret_key: "${BAIDU_SECRET_KEY}"
+    timeout: 30
+    
+  # 阿里通义千问配置
+  alibaba:
+    enabled: false
+    api_key: "${ALIBABA_API_KEY}"
+    model: "qwen-turbo"
+    timeout: 30
+
+# 适配器配置
+adapter_config:
+  # 主适配器
+  primary_adapter: "openai"
+  
+  # 降级顺序（当主适配器失败时）
+  fallback_order:
+    - "local_model"
+    - "baidu"
+    - "alibaba"
+  
+  # 重试配置
+  retry_config:
+    max_retries: 3
+    retry_delay: 1.0
+    exponential_backoff: true
+
+# 上下文工程配置
+context_engineering:
+  enabled: true
+  
+  # 行业关键词库
+  industry_keywords:
+    tech: ["敏捷开发", "迭代", "MVP", "技术栈", "架构", "部署", "测试", "上线", "代码", "开发"]
+    finance: ["ROI", "预算", "成本", "收益", "风险", "投资", "回报率", "现金流", "盈利", "亏损"]
+    manufacturing: ["产能", "供应链", "质量控制", "成本优化", "生产效率", "设备", "原材料", "库存"]
+    healthcare: ["合规", "临床试验", "监管", "安全性", "有效性", "FDA", "医疗器械", "药品"]
+    education: ["课程", "教学", "学生", "教师", "培训", "学习", "评估", "考试"]
+  
+  # 会议类型模板
+  meeting_templates:
+    project_review:
+      name: "项目评审会议"
+      focus_areas: ["进度", "风险", "资源", "下一步计划", "里程碑"]
+      decision_patterns: ["批准", "同意", "决定", "确认", "通过", "否决"]
+      action_patterns: ["负责", "完成", "提交", "跟进", "解决", "处理"]
+      
+    weekly_meeting:
+      name: "周例会"
+      focus_areas: ["本周工作", "下周计划", "问题", "协调", "支持"]
+      decision_patterns: ["安排", "调整", "协调", "确认", "同意"]
+      action_patterns: ["完成", "跟进", "汇报", "处理", "协助"]
+      
+    strategic_planning:
+      name: "战略规划会议"
+      focus_areas: ["战略", "目标", "方向", "投资", "市场", "竞争"]
+      decision_patterns: ["决定", "确定", "批准", "通过", "投资", "启动"]
+      action_patterns: ["制定", "调研", "分析", "提交", "评估", "规划"]
+      
+    budget_review:
+      name: "预算评审会议"
+      focus_areas: ["预算", "成本", "ROI", "投资", "收益", "风险"]
+      decision_patterns: ["批准", "同意", "否决", "调整", "确认"]
+      action_patterns: ["控制", "优化", "监控", "报告", "审计"]
+
+# 输出格式配置
+output_config:
+  format: "json"  # json, markdown, html
+  include_transcript: true
+  include_metadata: true
+  include_confidence_score: true
+  
+  # 输出字段配置
+  fields:
+    title: true
+    overview: true
+    key_points: true
+    decisions: true
+    action_items: true
+    risks: true
+    opportunities: true
+    confidence_score: true
+    processing_time: true
+    
+  # 语言配置
+  language: "zh"  # zh, en
+  
+  # 详细程度
+  detail_level: "detailed"  # brief, standard, detailed
+
+# 性能配置
+performance:
+  # 批处理大小
+  batch_size: 10
+  
+  # 并发处理
+  max_workers: 4
+  
+  # 缓存配置
+  cache_enabled: true
+  cache_ttl: 3600  # 秒
+  
+  # 超时配置
+  timeout: 60  # 秒
